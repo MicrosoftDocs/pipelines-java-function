@@ -3,20 +3,48 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
+
+# at the top of your YAML file 
+# set some variables that you'll need when you deploy
+variables:
+  # the name of the service connection that you created above
+  serviceConnectionToAzure: myapp-rg
+  # the name of your web app here is the same one you used above
+  # when you created the web app using the Azure CLI
+  appName: myapp-rg
+  
+# ...
+
+
 trigger:
 - master
 
 pool:
   vmImage: 'ubuntu-latest'
 
+
 steps:
-- task: Maven@3
+- script: echo Hello, world!
+
+# ...
+# add these as the last steps
+# to deploy to your app service
+- task: CopyFiles@2
+  displayName: Copy Files
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/
+    Contents: '**'
+    TargetFolder: $(build.artifactstagingdirectory)   
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifact
+  inputs:
+    PathtoPublish: $(build.artifactstagingdirectory)    
+
+- task: AzureFunctionApp@1
+  displayName: Azure Function App deploy
+  inputs:
+    azureSubscription: $(serviceConnectionToAzure)
+    appType: functionApp
+    appName: $(appName)
+    package: $(build.artifactstagingdirectory)
