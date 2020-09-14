@@ -48,4 +48,4 @@ steps:
     appType: functionApp
     appName: $(appName)
     package: $(build.artifactstagingdirectory)
-      AzureWebJobsDisableHomepage : true
+      AzureWebJobsDisableHomepage:true
