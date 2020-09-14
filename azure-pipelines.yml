@@ -36,16 +36,16 @@ steps:
     Contents: '**'
     TargetFolder: $(build.artifactstagingdirectory)/target/azure-functions/   
 
-
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifact
   inputs:
     PathtoPublish: $(build.artifactstagingdirectory)    
 
 - task: AzureFunctionApp@1
+  displayName: Azure Function App Deploy
   inputs:
-    azureSubscription: 'myapp-rg'
-    appType: 'functionApp'
-    appName: 'myapp-rg'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    deploymentMethod: 'auto'
+    azureSubscription: $(serviceConnectionToAzure)
+    appType: functionApp
+    appName: $(appName)
+    package: $(build.artifactstagingdirectory)
+      AzureWebJobsDisableHomepage : true
