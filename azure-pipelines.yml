@@ -32,9 +32,9 @@ steps:
 - task: CopyFiles@2
   displayName: Copy Files
   inputs:
-    SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/
+    SourceFolder: $(system.defaultworkingdirectory)
     Contents: '**'
-    TargetFolder: $(build.artifactstagingdirectory)   
+    TargetFolder: $(build.artifactstagingdirectory)/target/azure-functions/   
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifact
