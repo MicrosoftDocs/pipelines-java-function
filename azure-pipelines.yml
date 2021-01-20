@@ -26,7 +26,6 @@ pool:
 steps:
 - script: echo Hello, world!
 
-# ...
 # add these as the last steps
 # to deploy to your app service
 - task: CopyFiles@2
