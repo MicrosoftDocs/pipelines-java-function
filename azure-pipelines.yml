@@ -28,10 +28,11 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(system.defaultworkingdirectory)/target/azure-functions/$(appName)/*'
+    rootFolderOrFile: '$(system.defaultworkingdirectory)/target/azure-functions/$(appName)/'
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
+
 # - task: CopyFiles@2
 #   displayName: Copy Files
 #   inputs:
