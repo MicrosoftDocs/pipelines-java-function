@@ -27,28 +27,14 @@ steps:
     goals: 'package'
 
 - task: ArchiveFiles@2
+  displayName: Archive Files
   inputs:
-    rootFolderOrFile: '$(system.defaultworkingdirectory)/target/azure-functions/$(appName)/'
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
-
-# - task: CopyFiles@2
-#   displayName: Copy Files
-#   inputs:
-#     SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/$(appName)/
-#     Contents: '**'
-#     TargetFolder: $(build.artifactstagingdirectory)   
     
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     PathtoPublish: '$(build.artifactstagingdirectory)'
-#     ArtifactName: 'FunctionApp'
-#     publishLocation: 'Container'
-
-# - publish: $(build.artifactstagingdirectory)
-#   artifact: FunctionApp
-
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
@@ -59,6 +45,6 @@ steps:
   inputs:
     azureSubscription: 'Content health and performance(82c135d4-f813-4bec-a93e-60e4323918ee)'
     appType: 'functionApp'
-    appName: 'my-app-name'
+    appName: $(appName)
     package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     deploymentMethod: 'auto'
