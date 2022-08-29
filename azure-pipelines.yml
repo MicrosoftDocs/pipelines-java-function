@@ -32,11 +32,15 @@ steps:
     SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/$(appName)/
     Contents: '**'
     TargetFolder: $(build.artifactstagingdirectory)   
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)/$(appName)'
-    ArtifactName: 'FunctionApp'
-    publishLocation: 'Container'
+    
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(build.artifactstagingdirectory)'
+#     ArtifactName: 'FunctionApp'
+#     publishLocation: 'Container'
+
+- publish: $(build.artifactstagingdirectory)
+  artifact: FunctionApp
 
 - task: PublishTestResults@2
   inputs:
