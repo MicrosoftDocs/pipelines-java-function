@@ -6,6 +6,11 @@
 trigger:
 - master
 
+variables:
+  - name: appName
+    value: my-app-name 
+
+
 pool:
   vmImage: ubuntu-latest
 
@@ -24,7 +29,7 @@ steps:
 - task: CopyFiles@2
   displayName: Copy Files
   inputs:
-    SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/$(functionAppName)/
+    SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/$(appName)/
     Contents: '**'
     TargetFolder: $(build.artifactstagingdirectory)   
 
@@ -36,7 +41,8 @@ steps:
 - task: AzureFunctionApp@1
   displayName: Azure Function App deploy
   inputs:
-    azureSubscription: $(serviceConnectionToAzure)
-    appType: functionApp
-    appName: $(appName)
-    package: $(build.artifactstagingdirectory)/$(appName)
+    azureSubscription: 'Content health and performance(82c135d4-f813-4bec-a93e-60e4323918ee)'
+    appType: 'functionApp'
+    appName: 'my-app-name'
+    package: '$(build.artifactstagingdirectory)/$(appName)'
+    deploymentMethod: 'auto'
