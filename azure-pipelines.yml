@@ -36,7 +36,12 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifact
   inputs:
-    PathtoPublish: $(build.artifactstagingdirectory)   
+    PathtoPublish: $(build.artifactstagingdirectory)/$(appName)$(Build.BuildId)   
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/TEST-*.xml'
 
 - task: AzureFunctionApp@1
   displayName: Azure Function App deploy
