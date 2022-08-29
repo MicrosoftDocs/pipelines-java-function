@@ -32,11 +32,11 @@ steps:
     SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/$(appName)/
     Contents: '**'
     TargetFolder: $(build.artifactstagingdirectory)   
-
 - task: PublishBuildArtifacts@1
-  displayName: Publish Artifact
   inputs:
-    PathtoPublish: $(build.artifactstagingdirectory)/$(appName)$(Build.BuildId)   
+    PathtoPublish: '$(build.artifactstagingdirectory)/$(appName)'
+    ArtifactName: 'FunctionApp'
+    publishLocation: 'Container'
 
 - task: PublishTestResults@2
   inputs:
@@ -49,5 +49,5 @@ steps:
     azureSubscription: 'Content health and performance(82c135d4-f813-4bec-a93e-60e4323918ee)'
     appType: 'functionApp'
     appName: 'my-app-name'
-    package: '$(build.artifactstagingdirectory)/$(appName)'
+    package: '$(build.artifactstagingdirectory)/$(appName)/**'
     deploymentMethod: 'auto'
