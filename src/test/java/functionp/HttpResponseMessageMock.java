@@ -1,4 +1,4 @@
-package functions;
+package functionp;
 
 import com.microsoft.azure.functions.*;
 
